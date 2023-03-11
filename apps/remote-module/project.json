@@ -1,26 +1,29 @@
 {
-  "name": "vehicle-services",
+  "name": "remote-module",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/vehicle-services/src",
+  "sourceRoot": "apps/remote-module/src",
   "prefix": "remote-mfe",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@nrwl/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/vehicle-services",
-        "index": "apps/vehicle-services/src/index.html",
-        "main": "apps/vehicle-services/src/main.ts",
+        "outputPath": "dist/apps/remote-module",
+        "index": "apps/remote-module/src/index.html",
+        "main": "apps/remote-module/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/vehicle-services/tsconfig.app.json",
+        "tsConfig": "apps/remote-module/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/vehicle-services/src/favicon.ico",
-          "apps/vehicle-services/src/assets"
+          "apps/remote-module/src/favicon.ico",
+          "apps/remote-module/src/assets"
         ],
-        "styles": ["apps/vehicle-services/src/styles.scss"],
-        "scripts": []
+        "styles": ["apps/remote-module/src/styles.scss"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/remote-module/webpack.config.js"
+        }
       },
       "configurations": {
         "production": {
@@ -36,7 +39,10 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/remote-module/webpack.prod.config.js"
+          }
         },
         "development": {
           "buildOptimizer": false,
@@ -50,25 +56,25 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nrwl/angular:module-federation-dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "vehicle-services:build:production"
+          "browserTarget": "remote-module:build:production"
         },
         "development": {
-          "browserTarget": "vehicle-services:build:development"
+          "browserTarget": "remote-module:build:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
         "port": 4401,
-        "publicHost": "http://localhost:4201"
+        "publicHost": "http://localhost:4401"
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "vehicle-services:build"
+        "browserTarget": "remote-module:build"
       }
     },
     "lint": {
@@ -76,8 +82,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "apps/vehicle-services/**/*.ts",
-          "apps/vehicle-services/**/*.html"
+          "apps/remote-module/**/*.ts",
+          "apps/remote-module/**/*.html"
         ]
       }
     },
@@ -85,7 +91,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/vehicle-services/jest.config.ts",
+        "jestConfig": "apps/remote-module/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
